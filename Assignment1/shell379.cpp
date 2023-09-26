@@ -1,39 +1,70 @@
 #include <string>
 #include <iostream>
+#include "helpers.h"
+#include <vector>
 #include "processtable.h"
 
 using namespace std;
+#define LINE_LENGTH 100 // Max # of characters in an input line
+#define MAX_ARGS 7 // Max number of arguments to a command
+#define MAX_LENGTH 20 // Max # of characters in an argument
+#define MAX_PT_ENTRIES 32 // Max entries in the Process Table
 
 int main(int argc, char *argv[]) {
+    ProcessTable table = ProcessTable();
     while(1) {
         string incommand;
+        cout << "Shell379:";
         getline(cin, incommand);
+        vector<string> com_args = vector<string>();
+        string temp = "";
+        
+        for (char i: incommand) {
+            if (i == ' '){
+                com_args.push_back(temp);
+            }
+            else {
+                temp += i;
+            }
+        }
+        bool lenarg_check = false;
 
-        if (incommand.compare("exit") == 0){
-            /*
-            Code to wait for all processes to finish
-            */
-
-            break;
-        } else if (incommand.compare("jobs") == 0){
-            /*
-            Code for jobs command
-            */
-        } else if (incommand.compare("kill") == 0){
-            /*
-            Code for kill command
-            */
-        } else if (incommand.compare("wait") == 0){
-            /*
-            Code for wait command
-            */
-        } else{
-            /*
-            Code for other
-            */
+        for (string i: com_args) {
+            if (i.length() > MAX_LENGTH){
+                lenarg_check = true;
+            }
         }
 
-    }
+        if ((com_args.size() > MAX_ARGS) || (incommand.length() > LINE_LENGTH) || (lenarg_check)) {
+            cout << "Incorrect arguments";
+        } else{
+            if (com_args[0].compare("exit") == 0){
+                /*
+                Code to wait for all processes to finish
+                */
+                break;
+            } else if (com_args[0].compare("jobs") == 0){    
+                table.printProcesses();
+            } else if (com_args[0].compare("kill") == 0){
 
+                if (com_args.size() != 2) {
+                    cout << "Incorrect args";
+                } else{
+                    pid_t prc_id = stoi(com_args[1]);
+                    kill(prc_id, table);
+                }
+                
+            } else if (com_args[0].compare("wait") == 0){
+                if (com_args.size() != 2) {
+                    cout << "Incorrect args";
+                } else{
+                    pid_t prc_id = stoi(com_args[1]);
+                    wait(prc_id, table);
+                }
+            } else{
+                custom(com_args, table);
+            }
+        }
+    }
     return 0;
 }

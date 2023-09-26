@@ -1,23 +1,24 @@
-#include <iostream>
+#ifndef PROCESS_H
+#define PROCESS_H
+
 using namespace std;
 
 class Process{
     public:
     
-    Process(pid_t pid);
+    Process(pid_t pid, string command);
 
-    int getUserTime();
+    int getSysUserTime();
 
-    int getSysTime();
+    char getActive();
 
-    int getUserTimeTotal();
+    void setActive(char active );
 
-    int getSysTimeTotal();
+    pid_t getpid();
 
-    char* getActive();
+    string getCommand();
 
-    void setActive(char* active );
-
+    int getTime();
 
     ~Process();
 
@@ -25,7 +26,9 @@ class Process{
     private:
 
     pid_t pid;
-    int user_time;
-    int sys_time;
-    char * active;
+    char active;
+    string command;
 };
+
+
+#endif

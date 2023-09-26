@@ -1,3 +1,6 @@
+#ifndef PROCESSTABLE_H
+#define PROCESSTABLE_H
+
 #include <iostream>
 #include "process.h"
 #include <vector>
@@ -11,8 +14,14 @@ class ProcessTable {
 
     void removeProcess(Process process);
 
+    void printProcesses();
+
+    bool isEmpty();
+
     ~ProcessTable();
 
     private:
     vector<Process> processes;
 };
+
+#endif
