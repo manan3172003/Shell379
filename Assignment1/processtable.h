@@ -16,6 +16,8 @@ class ProcessTable {
 
     void printProcesses();
 
+    void clearProcesses();
+
     bool isEmpty();
 
     ~ProcessTable();

@@ -25,23 +25,6 @@ void Process::setActive(char active) {
     this->active = active;
 }
 
-
-// int Process::getSysUserTime(){
-
-//     ifstream statFile;
-//     statFile.open("/proc/"+std::to_string(this->pid)+"/stat");
-    
-//     string line;
-//     getline(statFile, line);
-
-//     cout << line << endl;
-
-//     statFile.close();
-    
-//     return 0;
-
-// }
-
 pid_t Process::getpid() {
     return this->pid;
 }

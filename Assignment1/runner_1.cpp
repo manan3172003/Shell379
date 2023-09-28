@@ -3,7 +3,7 @@
 #include "runner.h"
 using namespace std;
 
-int runner() {
+int main() {
     // Get the current time point
     auto start = std::chrono::high_resolution_clock::now();
 

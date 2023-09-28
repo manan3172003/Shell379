@@ -24,6 +24,7 @@ void ProcessTable::removeProcess(Process process){
     this->processes.erase((this->processes).begin()+counter);
 }
 
+
 bool ProcessTable::isEmpty(){
     if ((this->processes).size() == 0){
         return true;
@@ -40,7 +41,7 @@ void ProcessTable::printProcesses(){
     }
     int counter = 0;
     int active_counter = 0;
-    for (Process process: processes){
+    for (Process process: this->processes){
         printf("%2d: %7d %c %3d ",
                     counter,
                     process.getpid(),

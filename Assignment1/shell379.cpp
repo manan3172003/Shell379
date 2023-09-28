@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include "helpers.h"
+#include <sys/wait.h>
 #include <vector>
 #include "processtable.h"
 
@@ -16,15 +17,17 @@ int main(int argc, char *argv[]) {
         string incommand;
         cout << "Shell379:";
         getline(cin, incommand);
+        incommand+= " ";
         vector<string> com_args = vector<string>();
         string temp = "";
         
-        for (char i: incommand) {
-            if (i == ' '){
+        for (string::iterator i = incommand.begin(); i != incommand.end(); i++) {
+            if (*i == ' '){
                 com_args.push_back(temp);
+                temp = "";
             }
             else {
-                temp += i;
+                temp += *i;
             }
         }
         bool lenarg_check = false;
@@ -43,7 +46,8 @@ int main(int argc, char *argv[]) {
                 Code to wait for all processes to finish
                 */
                 break;
-            } else if (com_args[0].compare("jobs") == 0){    
+            } else if (com_args[0].compare("jobs") == 0){
+                waitpid(-1, NULL, WNOHANG);
                 table.printProcesses();
             } else if (com_args[0].compare("kill") == 0){
 
@@ -62,7 +66,7 @@ int main(int argc, char *argv[]) {
                     wait(prc_id, table);
                 }
             } else{
-                custom(com_args, table);
+                custom(com_args, &table);
             }
         }
     }
