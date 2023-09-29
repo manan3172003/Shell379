@@ -31,6 +31,7 @@ void custom(vector<string> com_args, ProcessTable * table) {
         } else {
             Process process = Process(prc_id, com_args[0]);
             (*table).insertProcess(process);
+            //message?
         }
     }
 }
