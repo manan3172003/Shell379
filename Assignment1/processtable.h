@@ -12,7 +12,7 @@ class ProcessTable {
 
     void insertProcess(Process process);
 
-    void removeProcess(Process process);
+    void removeProcess(pid_t process);
 
     void printProcesses();
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sys/resource.h>
-
+#include <sys/wait.h>
+#include <algorithm>
 #include "processtable.h"
 using namespace std;
 
@@ -8,20 +9,23 @@ ProcessTable::ProcessTable(){
 
 }
 
+
 void ProcessTable::insertProcess(Process process){
     this->processes.push_back(process);
 }
 
-void ProcessTable::removeProcess(Process process){
+void ProcessTable::removeProcess(pid_t process){
     int counter = 0;
     for (Process i: this->processes){
-        if (i.getpid() == process.getpid()){
-            break;
+        if (i.getpid() == process){
+            vector<Process>::iterator it = this->processes.begin();
+            advance(it, counter);
+            this->processes.erase(it);
+            return;
         }
         counter++;
     }
-
-    this->processes.erase((this->processes).begin()+counter);
+    
 }
 
 
@@ -36,9 +40,19 @@ bool ProcessTable::isEmpty(){
 void ProcessTable::printProcesses(){
     cout << "Running processes:" << endl;
 
+    for (Process process: this->processes){
+        pid_t prc = waitpid(process.getpid(), NULL, WNOHANG);
+        if(prc != 0) {
+            removeProcess(prc);
+        }
+    }
+
+    
     if (!(isEmpty())) {
         cout << " #      PID S SEC COMMAND" << endl;
     }
+
+
     int counter = 0;
     int active_counter = 0;
     for (Process process: this->processes){

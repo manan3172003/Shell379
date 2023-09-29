@@ -8,6 +8,7 @@ class Process{
     
     Process(pid_t pid, string command);
 
+
     int getSysUserTime();
 
     char getActive();

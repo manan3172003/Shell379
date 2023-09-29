@@ -25,7 +25,7 @@ void Process::setActive(char active) {
     this->active = active;
 }
 
-pid_t Process::getpid() {
+pid_t Process::getpid(){
     return this->pid;
 }
 

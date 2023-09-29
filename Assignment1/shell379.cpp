@@ -14,6 +14,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
     ProcessTable table = ProcessTable();
     while(1) {
+        waitpid(-1, NULL, WNOHANG);
         string incommand;
         cout << "Shell379:";
         getline(cin, incommand);
@@ -47,7 +48,6 @@ int main(int argc, char *argv[]) {
                 */
                 break;
             } else if (com_args[0].compare("jobs") == 0){
-                waitpid(-1, NULL, WNOHANG);
                 table.printProcesses();
             } else if (com_args[0].compare("kill") == 0){
 

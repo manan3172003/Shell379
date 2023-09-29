@@ -29,8 +29,8 @@ void custom(vector<string> com_args, ProcessTable * table) {
         if (com_args.back().compare("&")){
             wait(0);
         } else {
-        Process process = Process(prc_id, com_args[0]);
-        (*table).insertProcess(process);
-}
+            Process process = Process(prc_id, com_args[0]);
+            (*table).insertProcess(process);
+        }
     }
 }
