@@ -28,6 +28,41 @@ void ProcessTable::removeProcess(pid_t process){
     
 }
 
+void ProcessTable::waitAll(){
+    for (Process process: this->processes){
+        waitpid(process.getpid(), NULL, NULL);
+        removeProcess(process.getpid());
+    }
+
+    cout << "Running processes:" << endl;
+
+    int counter = 0;
+    int active_counter = 0;
+    for (Process process: this->processes){
+        printf("%2d: %7d %c %3d ",
+                    counter,
+                    process.getpid(),
+                    process.getActive(),
+                    process.getTime());
+        cout << process.getCommand() << endl;
+        counter++;
+        if ((process.getActive()) == 'R'){
+            active_counter++;
+        }
+
+    }
+
+    printf("Processes = %7d active\n", active_counter);
+
+    cout << "Completed processes:" << endl;
+    struct rusage usage{};
+    getrusage(RUSAGE_CHILDREN, &usage);
+
+    printf("User time = %7d seconds\n", (int) usage.ru_utime.tv_sec);
+    printf("Sys  time = %7d seconds\n\n", (int) usage.ru_stime.tv_sec);
+
+}
+
 
 bool ProcessTable::isEmpty(){
     if ((this->processes).size() == 0){

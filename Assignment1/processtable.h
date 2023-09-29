@@ -20,6 +20,8 @@ class ProcessTable {
 
     bool isEmpty();
 
+    void waitAll();
+
     ~ProcessTable();
 
     private:

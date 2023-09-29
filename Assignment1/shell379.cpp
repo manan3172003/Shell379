@@ -43,9 +43,7 @@ int main(int argc, char *argv[]) {
             cout << "Incorrect arguments";
         } else{
             if (com_args[0].compare("exit") == 0){
-                /*
-                Code to wait for all processes to finish
-                */
+                table.waitAll();
                 break;
             } else if (com_args[0].compare("jobs") == 0){
                 table.printProcesses();
