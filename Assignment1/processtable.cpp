@@ -14,6 +14,17 @@ void ProcessTable::insertProcess(Process process){
     this->processes.push_back(process);
 }
 
+
+bool ProcessTable::contains(pid_t prc){
+    for(Process process: this->processes){
+        if (process.getpid() == prc){
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void ProcessTable::removeProcess(pid_t process){
     int counter = 0;
     for (Process i: this->processes){

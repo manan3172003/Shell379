@@ -8,6 +8,15 @@
 #include "helpers.h"
 
 void kill(pid_t prc_id, ProcessTable & table) {
+    if ((table.contains(prc_id)) && (prc_id > 0)){
+        kill(prc_id, SIGCONT);
+        kill(prc_id, SIGTERM);
+        waitpid(prc_id, NULL, NULL);
+        kill(prc_id, SIGKILL);
+        table.removeProcess(prc_id);
+    } else {
+        cout << endl << "Incorrect <pid>" << endl;
+    }
 
 }
 
@@ -31,7 +40,6 @@ void custom(vector<string> com_args, ProcessTable * table) {
         } else {
             Process process = Process(prc_id, com_args[0]);
             (*table).insertProcess(process);
-            //message?
         }
     }
 }

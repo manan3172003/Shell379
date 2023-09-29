@@ -22,6 +22,8 @@ class ProcessTable {
 
     void waitAll();
 
+    bool contains(pid_t prc);
+
     ~ProcessTable();
 
     private:
