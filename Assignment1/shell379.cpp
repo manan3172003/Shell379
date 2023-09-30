@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
     ProcessTable table = ProcessTable();
     while(1) {
-        waitpid(-1, NULL, WNOHANG);
+        table.cleanUp();
         string incommand;
         cout << "Shell379:";
         getline(cin, incommand);
@@ -63,7 +63,21 @@ int main(int argc, char *argv[]) {
                     pid_t prc_id = stoi(com_args[1]);
                     wait(prc_id, table);
                 }
-            } else{
+            } else if (com_args[0].compare("suspend") == 0){
+                if (com_args.size() != 2) {
+                    cout << "Incorrect args";
+                } else{
+                    pid_t prc_id = stoi(com_args[1]);
+                    suspend(prc_id, table);
+                }
+            } else if (com_args[0].compare("resume") == 0){
+                if (com_args.size() != 2) {
+                    cout << "Incorrect args";
+                } else{
+                    pid_t prc_id = stoi(com_args[1]);
+                    resume(prc_id, table);
+                }
+            }else{
                 custom(com_args, &table);
             }
         }

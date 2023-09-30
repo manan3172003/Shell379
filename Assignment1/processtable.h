@@ -24,6 +24,10 @@ class ProcessTable {
 
     bool contains(pid_t prc);
 
+    void cleanUp();
+
+    Process& getProcess(pid_t prc);
+
     ~ProcessTable();
 
     private:

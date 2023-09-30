@@ -39,6 +39,15 @@ void ProcessTable::removeProcess(pid_t process){
     
 }
 
+Process& ProcessTable::getProcess(pid_t prc){
+    for (Process& process: this->processes){
+        if (process.getpid() == prc){
+            return process;
+        }
+        
+    }
+}
+
 void ProcessTable::waitAll(){
     for (Process process: this->processes){
         waitpid(process.getpid(), NULL, NULL);
@@ -83,16 +92,18 @@ bool ProcessTable::isEmpty(){
     }
 }
 
-void ProcessTable::printProcesses(){
-    cout << "Running processes:" << endl;
-
+void ProcessTable::cleanUp(){
     for (Process process: this->processes){
         pid_t prc = waitpid(process.getpid(), NULL, WNOHANG);
         if(prc != 0) {
             removeProcess(prc);
         }
     }
+}
 
+void ProcessTable::printProcesses(){
+    cleanUp();
+    cout << "Running processes:" << endl;
     
     if (!(isEmpty())) {
         cout << " #      PID S SEC COMMAND" << endl;
