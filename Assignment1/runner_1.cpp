@@ -1,6 +1,5 @@
 #include <iostream>
 #include <chrono>
-#include "runner.h"
 using namespace std;
 
 int main() {

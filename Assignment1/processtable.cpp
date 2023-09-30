@@ -44,37 +44,38 @@ Process& ProcessTable::getProcess(pid_t prc){
         if (process.getpid() == prc){
             return process;
         }
-        
-    }
+    } 
+
+    throw runtime_error("Process not found with given PID");
 }
 
 void ProcessTable::waitAll(){
     for (Process process: this->processes){
-        waitpid(process.getpid(), NULL, NULL);
+        waitpid(process.getpid(), NULL, 0);
         removeProcess(process.getpid());
     }
 
-    cout << "Running processes:" << endl;
+    // cout << "Running processes:" << endl;
 
-    int counter = 0;
-    int active_counter = 0;
-    for (Process process: this->processes){
-        printf("%2d: %7d %c %3d ",
-                    counter,
-                    process.getpid(),
-                    process.getActive(),
-                    process.getTime());
-        cout << process.getCommand() << endl;
-        counter++;
-        if ((process.getActive()) == 'R'){
-            active_counter++;
-        }
+    // int counter = 0;
+    // int active_counter = 0;
+    // for (Process process: this->processes){
+    //     printf("%2d: %7d %c %3d ",
+    //                 counter,
+    //                 process.getpid(),
+    //                 process.getActive(),
+    //                 process.getTime());
+    //     cout << process.getCommand() << endl;
+    //     counter++;
+    //     if ((process.getActive()) == 'R'){
+    //         active_counter++;
+    //     }
 
-    }
+    // }
 
-    printf("Processes = %7d active\n", active_counter);
+    // printf("Processes = %7d active\n", active_counter);
 
-    cout << "Completed processes:" << endl;
+    cout << "Resources used" << endl;
     struct rusage usage{};
     getrusage(RUSAGE_CHILDREN, &usage);
 

@@ -4,14 +4,14 @@ process.o: process.cpp
 processtable.o: process.o processtable.cpp
 	g++ processtable.cpp process.o -o processtable.o
 
-shell379:
-	g++ shell379.cpp process.cpp processtable.cpp -o shell379
+helpers.o: helpers.cpp
+	g++ helpers.cpp -o helpers
 
-test: process.cpp processtable.cpp
-	g++ test.cpp process.cpp processtable.cpp -o test
+shell379:
+	g++ shell379.cpp process.cpp helpers.cpp processtable.cpp -o shell379
 
 clean:
-	rm shell379 test
+	rm shell379
 
 temp:
 	g++ process.cpp processtable.cpp runner.cpp helpers.cpp shell379.cpp -Wall  -o shell379

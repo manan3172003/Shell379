@@ -1,7 +1,5 @@
 #ifndef HELPERS_H
 #define HELPERS_H
-
-#include "runner.h"
 #include "processtable.h"
 
 
